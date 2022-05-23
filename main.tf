@@ -20,6 +20,7 @@ resource "aws_subnet" "rosa_private" {
 
   tags = {
     Name = "${var.name}-private-${each.key}"
+    "kubernetes.io/role/internal-elb" = ""
   }
 
   lifecycle {
@@ -35,6 +36,11 @@ resource "aws_subnet" "rosa_public" {
 
   tags = {
     Name = "${var.name}-public-${each.key}"
+    "kubernetes.io/role/elb" = ""
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
   }
 }
 

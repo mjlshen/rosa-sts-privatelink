@@ -1,5 +1,9 @@
 provider "aws" {
-  region = "us-east-2"
+  region  = "us-east-2"
+  profile = "osd-staging-2"
+  assume_role {
+    role_arn = "arn:aws:iam::429297027867:role/OrganizationAccountAccessRole"
+  }
 
   default_tags {
     tags = {
