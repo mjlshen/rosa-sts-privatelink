@@ -19,7 +19,8 @@ resource "aws_subnet" "rosa_private" {
   cidr_block        = cidrsubnet(var.cidr, length(local.azs), each.value)
 
   tags = {
-    Name = "${var.name}-private-${each.key}"
+    Name                              = "${var.name}-private-${each.key}"
+    "kubernetes.io/role/internal-elb" = ""
   }
 
   lifecycle {
@@ -34,7 +35,12 @@ resource "aws_subnet" "rosa_public" {
   cidr_block        = cidrsubnet(var.cidr, length(local.azs), length(local.azs) + each.value)
 
   tags = {
-    Name = "${var.name}-public-${each.key}"
+    Name                     = "${var.name}-public-${each.key}"
+    "kubernetes.io/role/elb" = ""
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
   }
 }
 
