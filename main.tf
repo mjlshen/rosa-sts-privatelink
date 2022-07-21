@@ -1,4 +1,5 @@
-resource "aws_iam_service_linked_role" "elasticbeanstalk" {
+resource "aws_iam_service_linked_role" "elb" {
+  count            = var.create_elb_iam_role ? 1 : 0
   aws_service_name = "elasticloadbalancing.amazonaws.com"
 }
 
